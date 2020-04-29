@@ -1,0 +1,106 @@
+package juemingzi;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class changhenge {
+    public static void main(String args[]) {
+        String poet = new String();
+        Scanner scanner = new Scanner(System.in);
+
+        // 循环读入，直到获取到正确数据
+        boolean flag = true;
+        while (flag) {
+            System.out.println("长恨歌:");
+            poet = poet + (scanner.next());
+
+            if (poet.contains("，") || poet.contains("。") ) {
+                // 输入不正确
+                System.out.println("输入的内容有误,请重新输入");
+                poet = "";
+            } else if(poet.length() % 14 == 0){
+                // 输入正确跳出循环
+                System.out.println("输入的内容满足要求:"+ poet);
+                flag = false;
+            }
+        }
+
+
+        // 关键字
+        String keyword = "";
+        // 根据输入关键字
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("请输入要在本诗中统计个数的文字:");
+        keyword = (scanner1.next());
+        System.out.println("待统计的关键字" + keyword);
+
+
+        //插入逗号句号
+        StringBuffer poetBuffer = new StringBuffer("");
+        List<String> list = new ArrayList();
+
+        for (int i = 0; i < (poet.length()); i= i+7) {
+            list.add(poet.substring(i, i+ 7));
+        }
+        for(int i=0 ; i < list.size(); i++){
+            System.out.println(list.get(i));
+            poetBuffer.append(list.get(i));
+            if(i %2 == 0){
+                poetBuffer.append("，");
+            }else{
+                poetBuffer.append("。\n");
+            }
+        }
+
+
+
+        System.out.println("输出断句之后的古诗：");
+        System.out.println(poetBuffer.toString());
+        // 保存结果到文件中
+        saveText(poet);
+        int count = count(poetBuffer.toString(), keyword);
+        System.out.println("包含次数为：" + count);
+        // 保存一个换行
+        saveText("\n");
+        // 保存计算结果
+        saveText(count + "");
+    }
+
+    static int count(String poet, String word) {
+
+        int count = 0;
+
+        // 先分割句号
+        String[] poets = poet.split("。");
+        for (int i = 0; i < poets.length; i++) {
+            // 分割逗号
+            String[] tempArray = poets[i].split(",");
+            for (int j = 0; j < tempArray.length; j++) {
+                if (tempArray[j].contains(word)) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+
+    }
+
+    private static void saveText(String content) {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter("output.txt", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintWriter pw = new PrintWriter(fw);
+        pw.print(content);
+        pw.flush();
+
+
+    }
+}
