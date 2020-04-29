@@ -36,3 +36,4 @@ StringBuffer poetBuffer = new StringBuffer("");
 # 实验收获
 我不会将结果输入txt文件中的实现，于是我在网上看了很多代码，还是有一些问题，无奈的我最终在java书里寻找到了结果，这个代码是通用的，所以我记住了，以后可以照搬，通过此次实验，我进一步熟悉了java以及string的用法还有列表对于字符串的一些应用。
 # 实验结果
+![avatar](https://github.com/zhao-yu123/bukaozuoye123/blob/master/1588158817.png)
